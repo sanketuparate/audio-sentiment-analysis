@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<style type="text/css">
+body {
+    background: url("/static/images/bg3.jpg");
+}
+
+h1, p, input {
+    font-family: 'Lato', sans-serif;
+     color: #002B54;
+}
+
+h2{
+    color: #002B54;
+}
+
+mark{
+  background-color: grey;
+  color: black;  
+}
+
+
+audio::-webkit-media-controls-play-button,
+audio::-webkit-media-controls-panel {
+  background-color: #AEC6CC;
+}
+
+.footer {
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   background-color: #AEC6CC;
+   color: #D2EFDB;
+   text-align: center;
+}
+
+#speechContainer {
+    margin: 20px;
+}
+
+
+#submitButton {
+    background-color: #1A86A8;
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    margin-top: 20px;
+}
+
+#submitButton:hover {
+    cursor: pointer;
+}
+
+#speechTranscriptContainer {
+    margin-top: 20px;
+    }
+
+#speechText {
+    font-size: 18px;
+    width: 500px;
+}
+</style>
+
+<head>
+    <link rel="shortcut icon" href="#">
+    <meta charset="UTF-8"><!-- 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <title> Audio Sentiment Analysis </title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/index.css') }}">
+    <!-- <link rel="stylesheet" type="text/css" href="index.css"> -->
+<!--     <script type="text/javascript">
+        var audio = document.getElementById('a');
+        audio.addEventListener('touchstart', function() { audio.play(); }, false);
+    </script> -->
+</head>
+
+
+<center>
+<body>
+<div class="row" style="padding-top:3%; content: '';display: table;clear: both; ">
+    <!-- <marquee><h2>SONIC SARK's Presents</h2></marquee> -->
+    <mark style="background-color: #AEC6CC ; color: #002B54 ; font-size: 50px ; border-radius: 25px;">  Audio Sentiment Analysis  </mark>
+    
+
+
+<div style="padding: 4%; ">
+
+<center>
+<div class="column" style= "width: 50% ; float:left;"><h1>Record and Predict</h1>
+
+
+    <div id="speechContainer">
+                <form method="post" enctype="multipart/form-data" action="/recording">                       
+                <input style="background-color: #002B54" type="submit" id="submitButton" value="Press and Say Something"/>
+                <br>
+                </form>
+    </div>
+
+    <div id="speechContainer">
+                <form method="post" enctype="multipart/form-data" action="/at">
+                <input style="background-color: #002B54" type="submit" id="submitButton" value="Audio to Text"/>
+                </form>
+
+                {% if transcript != "" %}
+                <div id="speechTranscriptContainer">
+                <h2>You Said: </h2>
+                <p id="speechText">{{ transcript }}</p>
+                </div>
+                {% endif %}
+            <!-- <input type="button" name="apb" value="Play Audio" onClick="EvalSound('static/output.wav')"> -->
+                
+    </div>
+
+    <div>
+        <center>
+              
+            <!--  <input style="background-color: #002B54" type="submit" id="submitButton" value="play"/> -->
+                <audio controls style="width: 200px" preload="auto">
+                <source src="/static/output.wav" type="audio/wav" >
+                </audio> 
+                
+
+               
+        </center>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    <div>
+        <center>
+                <form method="post" enctype="multipart/form-data" action="/predict">
+                <input style="background-color: #002B54" type="submit" id="submitButton" value="Predict Emotion"/>
+                </form>
+
+                {% if label != "" %}
+                <div id="speechTranscriptContainer">
+                <h2>Prediction : </h2>
+                <p id="speechText">{{ label }}</p>
+                </div>
+                {% endif %}
+
+                {% if label =="happy" %}
+                <div>
+                     <h4>Click on this face ! :)</h4>
+                   <a href="https://open.spotify.com/playlist/78kBHYaQsF6zntWU9R6ziQ?si=PqzszhySSoK0l-9sTjov7Q&utm_source=copy-link"><img src="/static/images/happy.gif" width="150" height="150"> </img></a> 
+                </div>
+                {% endif %}
+                
+
+                {% if label =="sad" %}
+                <div>
+                     <h4>Click on this face ! :)</h4>
+                   <a href="https://open.spotify.com/playlist/5HKQ4MvRPZQapRDjIuvwG2?si=uS1OIanfQbiLtgp9k-kTWQ&utm_source=copy-link"><img src="/static/images/sad.gif" width="150" height="150"> </img></a> 
+                </div>
+                {% endif %}
+
+                {% if label =="neutral" %}
+                <div>
+                     <h4>Click on this face ! :)</h4>
+                   <a href="https://open.spotify.com/playlist/4PFwZ4h1LMAOwdwXqvSYHd?si=ucCtyHbPRrS1rc3h1oLCug&utm_source=copy-link"><img src="/static/images/neutral.gif" width="150" height="150"> </img></a> 
+                </div>
+                {% endif %}
+
+
+                {% if label == "calm" %}
+                <div>
+                     <h4>Click on this face ! :)</h4>
+                   <a href="https://open.spotify.com/playlist/11q1sTpWABVhGmIBcfDLtt?si=T1dBzzP3RsOHwt6PgfMF1A&utm_source=copy-link"><img src="/static/images/calm.gif" width="150" height="150"> </img></a> 
+                </div>
+                {% endif %}
+
+
+                {% if label =="angry" %}
+                <div>
+                     <h4>Click on this face ! :)</h4>
+                   <a href="https://open.spotify.com/playlist/3Gc6NLcPcY1iKWEyWg3h3t?si=QO4LApGTSFSZIae0AOD_DQ&utm_source=copy-link"><img src="/static/images/angreey.gif" width="150" height="150"> </img></a> 
+                </div>
+                {% endif %}
+
+
+                {% if label =="fear" %}
+                <div>
+                     <h4>Click on this face ! :)</h4>
+                    <h3>Here is something to motivate you</h3>
+                   <a href="https://open.spotify.com/playlist/4Tplo3zpo39I2w8JvtcF9g?si=oAFMwNe8S76RlDzfV917Ng&utm_source=copy-link"><img src="/static/images/fear.png" width="150" height="150"> </img></a> 
+                </div>
+                {% endif %}
+
+                 {% if label =="disgust" %}
+                <div>
+                     <h4>Click on this face ! :)</h4>
+                    <h3>Here is something to uplift your mood</h3>
+                   <a href="https://open.spotify.com/playlist/70vGDUCLGf79Y0KX7HXmT1?si=SkGSO--6TtCMQxW2hQl1tw&utm_source=copy-link"><img src="/static/images/disgust.gif" width="150" height="150"> </img></a> 
+                </div>
+                {% endif %}
+
+
+                 {% if label =="surprise" %}
+                <div>
+                     <h4>Click on this face ! :)</h4>
+                   <a href="https://open.spotify.com/track/1ukI7i3fps8zaBlEf18v0l?si=2v0KHG0KSky70ZFYZlpkfw&utm_source=copy-link"><img src="/static/images/surprice.gif" width="150" height="150"> </img></a> 
+                </div>
+                {% endif %}
+
+        </center>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+
+  <!--   <center>
+        <div id="speechContainer">
+                <form method="post" enctype="multipart/form-data" action="/predictbyseq">
+                <input style="background-color: #002B54" type="submit" id="submitButton" value="Predict Emotion"/>
+                </form>
+
+                {% if label2 != "" %}
+                <div id="speechTranscriptContainer">
+                <h2>Prediction (By Sequntial) : </h2>
+                <p id="speechText">{{ label2 }}</p>
+                </div>
+                {% endif %}
+        </div>
+    </center> -->
+
+
+
+
+
+    </div>
+</center>
+
+
+
+
+
+
+
+
+<center>
+
+<div class="column" style= "width: 50% ; float:right; "><h1> Upload a file </h1><br>
+
+    <center>
+            <div>
+                <form method="post" enctype="multipart/form-data" action="/request">
+                <input type="file" name="file"/>
+                <br> <br>
+
+                <input style="background-color: #002B54" type="submit" id="submitButton" value="Submit" /> 
+                <br>
+                {% if transcript2 != "" %}
+                <div id="speechTranscriptContainer">
+                <h2>You Said : </h2>
+                <p id="speechText">{{ transcript2 }}</p>
+                </div>
+                {% endif %}
+                <br>
+                
+                <div id="speechTranscriptContainer">
+                <audio controls id="a" style="width: 200px">
+                <source src="/static/output.wav" type="audio/wav" >
+                </div>
+               </audio>  
+                </form>
+            </div>
+
+
+    <div>
+            <center>
+                <form method="post" enctype="multipart/form-data" action="/predictbyupload">
+                <input style="background-color: #002B54" type="submit" id="submitButton" value="Predict Emotion"/>
+
+                </form>
+
+                {% if l != "" %}
+                <div id="speechTranscriptContainer">
+                <h2>Prediction : </h2>
+                <p id="speechText">{{ l }}
+
+                </p>
+                
+                </div>
+                {% endif %}
+
+                {% if l =="happy" %}
+                <div>
+                     <h4>Click on this face ! :)</h4>
+                   <a href="https://open.spotify.com/playlist/78kBHYaQsF6zntWU9R6ziQ?si=PqzszhySSoK0l-9sTjov7Q&utm_source=copy-link"><img src="/static/images/happy.gif" width="150" height="150"> </img></a> 
+                </div>
+                {% endif %}
+                
+
+                {% if l =="sad" %}
+                <div>
+                     <h4>Click on this face ! :)</h4>
+                   <a href="https://open.spotify.com/playlist/5HKQ4MvRPZQapRDjIuvwG2?si=uS1OIanfQbiLtgp9k-kTWQ&utm_source=copy-link"><img src="/static/images/sad.gif" width="150" height="150"> </img></a> 
+                </div>
+                {% endif %}
+
+                {% if l =="neutral" %}
+                <div>
+                     <h4>Click on this face ! :)</h4>
+                   <a href="https://open.spotify.com/playlist/4PFwZ4h1LMAOwdwXqvSYHd?si=ucCtyHbPRrS1rc3h1oLCug&utm_source=copy-link"><img src="/static/images/neutral.gif" width="150" height="150"> </img></a> 
+                </div>
+                {% endif %}
+
+
+                {% if l == "calm" %}
+                <div>
+                     <h4>Click on this face ! :)</h4>
+                   <a href="https://open.spotify.com/playlist/11q1sTpWABVhGmIBcfDLtt?si=T1dBzzP3RsOHwt6PgfMF1A&utm_source=copy-link"><img src="/static/images/calm.gif" width="150" height="150"> </img></a> 
+                </div>
+                {% endif %}
+
+
+                {% if l =="angry" %}
+                <div>
+                     <h4>Click on this face ! :)</h4>
+                   <a href="https://open.spotify.com/playlist/3Gc6NLcPcY1iKWEyWg3h3t?si=QO4LApGTSFSZIae0AOD_DQ&utm_source=copy-link"><img src="/static/images/angreey.gif" width="150" height="150"> </img></a> 
+                </div>
+                {% endif %}
+
+
+                {% if l =="fear" %}
+                <div>
+                     <h4>Click on this face ! :)</h4>
+                    <h3>Here is something to motivate you</h3>
+                   <a href="https://open.spotify.com/playlist/4Tplo3zpo39I2w8JvtcF9g?si=oAFMwNe8S76RlDzfV917Ng&utm_source=copy-link"><img src="/static/images/fear.png" width="150" height="150"> </img></a> 
+                </div>
+                {% endif %}
+
+                 {% if l =="disgust" %}
+                <div>
+                     <h4>Click on this face ! :)</h4>
+                    <h3>Here is something to uplift your mood</h3>
+                   <a href="https://open.spotify.com/playlist/70vGDUCLGf79Y0KX7HXmT1?si=SkGSO--6TtCMQxW2hQl1tw&utm_source=copy-link"><img src="/static/images/disgust.gif" width="150" height="150"> </img></a> 
+                </div>
+                {% endif %}
+
+
+                 {% if l =="surprise" %}
+                <div>
+                     <h4>Click on this face ! :)</h4>
+                   <a href="https://open.spotify.com/track/1ukI7i3fps8zaBlEf18v0l?si=2v0KHG0KSky70ZFYZlpkfw&utm_source=copy-link"><img src="/static/images/surprice.gif" width="150" height="150"> </img></a> 
+                </div>
+                {% endif %}
+
+
+
+
+            </center>
+    </div>
+
+    </center>
+    <!-- <audio id="audio" controls="controls">
+    <source id="source">
+    </audio>
+    <br>
+    <button id="set_src">set src</button>
+    <button id="load_btn">load</button>
+
+
+    <script type="text/javascript">
+    set_src.onclick = function() {
+  source.src = '/static/output.wav';
+  console.log('source src:', source.src);
+  setTimeout(function(){console.log('audio src:', audio.currentSrc)});
+}
+
+load_btn.onclick = function() {
+  audio.load(); // you must call this
+  setTimeout(function(){console.log('audio src:', audio.currentSrc)});
+};
+    </script> -->
+<!-- <audio id="my-audio" controls>
+  <source src="/static/output.wav" type="audio/wav">
+</audio>
+<button onclick="cs_change_music('/static/output.wav');">Play music 1</button>
+
+<script type="text/javascript">
+  
+   function cs_change_music(music)
+   {
+      
+     document.getElementById("my-audio").pause();
+     document.getElementById("my-audio").setAttribute('src', music);
+     document.getElementById("my-audio").load();
+     document.getElementById("my-audio").play();
+   }
+</script>
+ -->
+
+<!-- <div id="speechContainer">
+                <form method="post" enctype="multipart/form-data" action="/wav">                       
+                <input style="background-color: #002B54" type="submit" id="submitButton" value="play audio"/>
+                <br>
+                </form>
+    </div> -->
+
+<!-- <button onclick="myFunction()" type="button">Change Audeo</button><br>
+ 
+<audio id="myAudio" controls autoplay>
+  <source src="/static/output.wav" type="audio/wav">
+</audio>
+
+<script> 
+  document.getElementById("myAudio").load();
+</script>
+ -->
+
+
+
+</div>
+
+</center>
+
+
+
+
+
+</div>
+</div>
+</body>
+</div>
+</center>
+</div>
+<!-- <div id="speechContainer">
+                <form method="post" enctype="multipart/form-data" action="/remove">                       
+                <input style="background-color: #002B54" type="submit" id="submitButton" value="Refresh"/>
+                <br>
+                </form>
+    </div>
+</div> -->
+
+
+
+</body>
+</center>
+</html>

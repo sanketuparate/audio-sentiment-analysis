@@ -1,0 +1,40 @@
+#b {
+    background-image: url('images/bg.jpg');
+    background-color: black;
+    background-size: cover;
+}
+
+h1, p, input {
+    font-family: 'Lato', sans-serif;
+}
+
+mark{
+  background-color: grey;
+  color: black;  
+}
+
+#speechContainer {
+    margin: 20px;
+}
+
+
+#submitButton {
+    background-color: #969A42;
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    margin-top: 20px;
+}
+
+#submitButton:hover {
+    cursor: pointer;
+}
+
+#speechTranscriptContainer {
+    margin-top: 20px;
+    }
+
+#speechText {
+    font-size: 18px;
+    width: 500px;
+}
